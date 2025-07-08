@@ -139,8 +139,8 @@
 
 
 import React, { useState, useMemo } from 'react'
-import Lightbox from 'react-image-lightbox'
-import 'react-image-lightbox/style.css'
+import Lightbox from 'yet-another-react-lightbox'
+import 'yet-another-react-lightbox/styles.css'
 import emoji from "../assets/smileemoji.png"
 import company1 from '../assets/company1.jpg'
 import company2 from '../assets/company2.jpg'
@@ -280,20 +280,13 @@ const THILife = () => {
                         </div>
                     </div>
                 </div>
-                {lightboxOpen && (
-                    <Lightbox
-                        mainSrc={activeImages[photoIndex]}
-                        nextSrc={activeImages[(photoIndex + 1) % activeImages.length]}
-                        prevSrc={activeImages[(photoIndex + activeImages.length - 1) % activeImages.length]}
-                        onCloseRequest={() => setLightboxOpen(false)}
-                        onMovePrevRequest={() =>
-                            setPhotoIndex((photoIndex + activeImages.length - 1) % activeImages.length)
-                        }
-                        onMoveNextRequest={() =>
-                            setPhotoIndex((photoIndex + 1) % activeImages.length)
-                        }
-                    />
-                )}
+                <Lightbox
+                    open={lightboxOpen}
+                    close={() => setLightboxOpen(false)}
+                    index={photoIndex}
+                    slides={activeImages.map((src, index) => ({ src }))}
+                    onView={({ index }) => setPhotoIndex(index)}
+                />
             </section>
         </>
     )
